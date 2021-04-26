@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import contactsActions from '../../redux/contacts/contacts-action'
 import operations from '../../redux/contacts/contacts-operations';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss'
@@ -33,6 +32,6 @@ const ContactList = ({contacts, onDeleteContact }) =>{return (<>
         contacts: getVisibleContact(contacts, filter)
     })
     const mapDispatchToProps = dispatch => ({
-        onDeleteContact: (id) => dispatch(contactsActions.deleteContact(id)),
+        onDeleteContact: (id) => dispatch(operations.deleteContact(id)),
     })
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
