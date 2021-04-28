@@ -1,19 +1,36 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Form from './components/Form';
 import ContactList from './components/ContactList';
 import Filter from './components/Filter';
-// import PhoneBook from './components/PhoneBook';
 import { ToastContainer } from 'react-toastify';
+import { operations, selectors } from './redux/contacts';
+import Spinner from './components/Spinner';
 import 'react-toastify/dist/ReactToastify.css';
 import 'modern-normalize/modern-normalize.css';
 
-const App = () => (
-  <>
-    <Form />
-    <Filter />
-    <ContactList />
-    {/* <PhoneBook /> */}
-    <ToastContainer />
-  </>
-);
+class App extends Component {
+  componentDidMount() {
+    this.props.fetchContacts();
+  }
+  render() {
+    return (
+      <>
+        <Form />
+        <Filter />
+        {this.props.isLoadingContacts ? <Spinner /> : <ContactList />}
+        <ToastContainer />
+      </>
+    );
+  }
+}
 
-export default App;
+const mapStateToProps = state => ({
+  isLoadingContacts: selectors.getIsLoading(state),
+});
+
+const mapDispatchToProps = dispacth => ({
+  fetchContacts: () => dispacth(operations.fetchContacts()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

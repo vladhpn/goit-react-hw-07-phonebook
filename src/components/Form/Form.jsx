@@ -1,6 +1,6 @@
 import { Component } from "react";
-import { connect} from 'react-redux';
-import operations from '../../redux/contacts/contacts-operations';
+import { connect } from 'react-redux';
+import { operations } from '../../redux/contacts';
 import { toast } from 'react-toastify';
 import styles from '../Form/styles.module.scss';
 
@@ -11,6 +11,7 @@ class Form extends Component{
         name: '',
         number: '',
     }
+
     handleInputChange = (event) => {
         const { name, value } = event.currentTarget;
         this.setState({
@@ -40,6 +41,8 @@ class Form extends Component{
       reset = () => {
           this.setState({name : '', number : ''})
       }
+
+   
 
     render(){
         return(<>
@@ -82,7 +85,7 @@ const mapStateToProps = ({ contacts: { contacts } }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (name,number) => dispatch(operations.addContact(name,number))
+  onSubmit: (name,number) => dispatch(operations.addContact(name,number)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
